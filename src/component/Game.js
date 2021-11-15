@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import times from 'lodash/times';
 import { MAX_POS } from '../constant';
 import { getInitialTileList } from '../util/tile';
+import useMoveTile from '../hook/useMoveTile';
+import Tile from './Tile';
 
-export default function Game() {
-  const [tileList, setTitleList] = useState(getInitialTileList);
+export default function Game({ setScore }) {
+  const [tileList, setTileList] = useState(getInitialTileList);
+  useMoveTile({ tileList, setTileList, setScore }); //costume hook!
   return (
     <div className="game-container">
       <div className="grid-container">
-        {times(MAX_POS, () => (
-          <div className="grid-row">
-            {times(MAX_POS, () => (
-              <div className="grid-cell"></div>
+        {times(MAX_POS, index => (
+          <div key={index} className="grid-row">
+            {times(MAX_POS, index2 => (
+              <div key={index2} className="grid-cell"></div>
             ))}
           </div>
         ))}
@@ -19,9 +22,7 @@ export default function Game() {
 
       <div className="tile-container">
         {tileList.map(item => (
-          <div className={`tile tile-${item.value} tile-position-${item.x}-${item.y} tile-new`}>
-            <div className="tile-inner">{item.value}</div>
-          </div>
+          <Tile key={item.id} {...item}/>
         ))}
       </div>
     </div>

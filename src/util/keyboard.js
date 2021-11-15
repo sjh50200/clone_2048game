@@ -1,5 +1,6 @@
 //직접 구현도 가능하지만 여기서는 hotkeys-js 사용
 //사용법 : hotkeys(key, () => {}));
+import hotkeys from 'hotkeys-js';
 
 const observerMap = {};
 export function addKeyObserver(key, callback) {
